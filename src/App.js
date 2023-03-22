@@ -1,34 +1,31 @@
 import { useState, useEffect } from "react";
 
-function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((prev) => prev + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-  console.log("i run all the time");
+function Hello() {
   useEffect(() => {
-    console.log("I run only once.");
+    console.log("hi");
+    return () => console.log("bye");
   }, []);
-  // keyword가 변화할 떄 코드를 실행함, counter가 변화하면 코드를 실행하지 않음
-  useEffect(() => {
-    console.log("I run when 'keyword' changes");
-  }, [keyword]);
-  useEffect(() => {
-    console.log("I run when 'counter' changes");
-  }, [counter]);
-  useEffect(() => {
-    console.log("I run when 'keyword' & 'counter' changes");
-  }, [counter, keyword]);
+  /* useEffect(function (){
+    console.log("hi")
+    return function(){
+      console.log("bye")
+    }
+  }, []); 
+   같은 코드지만 위 방식이 더 선호됨
+    Cleanup 함수는 컴포넌트가 삭제될 때 실행됨
+    가끔 필요하지만, 웬만해선 필요 없을 기능
+  */
+  return <h1>Hello</h1>;
+}
+
+function App() {
+  const [showing, setShowing] = useState(false);
+  const onClick = () => setShowing((prev) => !prev);
   return (
+    // 자바스크립트 사용 시 {} 필요
     <div>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="Search here..."
-      ></input>
-      <h1>{counter}</h1>
-      <button onClick={onClick}>Click Me</button>
+      {showing ? <Hello /> : null}
+      <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
