@@ -5,13 +5,10 @@ function App() {
   const [toDos, setToDos] = useState([]);
   const onChange = (event) => setToDo(event.target.value);
   const onSubmit = (event) => {
-    // form은 submit 이벤트를 갖고있기 때문에 기본 동작을 막음
     event.preventDefault();
     if (toDo === "") {
       return;
     }
-    // state는 직접 수정하지 않고 함수를 사용해야만 함. state는 항상 새로운 것이어야만 함
-    // ... 을 사용하여 currentArray 배열에 toDo를 앞에서 추가시킴
     setToDos((currentArray) => [toDo, ...currentArray]);
     setToDo("");
   };
@@ -27,6 +24,17 @@ function App() {
         />
         <button>Add to Do</button>
       </form>
+      <hr />
+      <ul>
+        {
+          // map 함수는 하나의 배열에 있는 아이템을 내가 원하는걸로 바꿔주고 새로운 배열로 바꿔줌
+          // 리액트는 list에 있는 모든 아이템을 인식하기 때문에 key를 넣어 고유하게 만드러줘야 함
+          // map의 첫 번째 인자는 값이고, 두 번째는 index, 즉 숫자를 의미
+          toDos.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))
+        }
+      </ul>
     </div>
   );
 }
