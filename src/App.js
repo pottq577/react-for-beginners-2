@@ -1,31 +1,32 @@
-import { useState, useEffect } from "react";
-
-function Hello() {
-  useEffect(() => {
-    console.log("hi");
-    return () => console.log("bye");
-  }, []);
-  /* useEffect(function (){
-    console.log("hi")
-    return function(){
-      console.log("bye")
-    }
-  }, []); 
-   같은 코드지만 위 방식이 더 선호됨
-    Cleanup 함수는 컴포넌트가 삭제될 때 실행됨
-    가끔 필요하지만, 웬만해선 필요 없을 기능
-  */
-  return <h1>Hello</h1>;
-}
+import { useState } from "react";
 
 function App() {
-  const [showing, setShowing] = useState(false);
-  const onClick = () => setShowing((prev) => !prev);
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (event) => setToDo(event.target.value);
+  const onSubmit = (event) => {
+    // form은 submit 이벤트를 갖고있기 때문에 기본 동작을 막음
+    event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    // state는 직접 수정하지 않고 함수를 사용해야만 함. state는 항상 새로운 것이어야만 함
+    // ... 을 사용하여 currentArray 배열에 toDo를 앞에서 추가시킴
+    setToDos((currentArray) => [toDo, ...currentArray]);
+    setToDo("");
+  };
   return (
-    // 자바스크립트 사용 시 {} 필요
     <div>
-      {showing ? <Hello /> : null}
-      <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="Write your to do..."
+        />
+        <button>Add to Do</button>
+      </form>
     </div>
   );
 }
