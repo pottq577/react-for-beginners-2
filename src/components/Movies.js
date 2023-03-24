@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-// props는 object일 뿐이고, 우리는 그걸 열어서 item을 꺼내 쓰는 것일 뿐임
 function Movie({ id, medium_cover_image, title, summary, genres }) {
   return (
     <div>

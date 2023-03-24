@@ -14,7 +14,3 @@ function Detail() {
   return <h1>Detail</h1>;
 }
 export default Detail;
-
-/**
- * !! Detail 화면에 로딩, 영화의 상세 정보 등 페이지 꾸며보기
- */
